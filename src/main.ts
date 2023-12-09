@@ -1,5 +1,5 @@
-// import type {p5Type} from "p5"
-import * as P5 from "p5";
+// @ts-ignore
+import P5 from "p5";
 import { Color } from "./Color";
 import { randomValueIn } from "./utils";
 
@@ -16,10 +16,12 @@ const getCurrentURLInformation = () => {
 };
 const { width, height } = getCurrentURLInformation()
 
-const NUMBER_OF_SQUARE = 30;
+
+const NUMBER_OF_SQUARE_HORIZONTAL = 18;
+const NUMBER_OF_SQUARE_VERTICAL = 6;
 const MARGIN_SPACE = 0;
 
-const SIZE = width / NUMBER_OF_SQUARE;
+const SIZE = height / NUMBER_OF_SQUARE_VERTICAL;
 
 const colors: Color[] = [
   new Color("#FFFFFF"),
@@ -27,8 +29,8 @@ const colors: Color[] = [
 ];
 
 let squares: any[] = [];
-for (let y = 0; y < NUMBER_OF_SQUARE; y++) {
-  for (let x = 0; x < NUMBER_OF_SQUARE; x++) {
+for (let y = 0; y < NUMBER_OF_SQUARE_VERTICAL; y++) {
+  for (let x = 0; x < NUMBER_OF_SQUARE_HORIZONTAL; x++) {
     squares.push({
       x: (x * (SIZE - MARGIN_SPACE) + (x * MARGIN_SPACE)),
       y: (y * (SIZE - MARGIN_SPACE) + (y * MARGIN_SPACE)),
@@ -75,8 +77,7 @@ const makeDraw = (p5: P5) => () => {
   });
 }
 
-export const p5js = new P5(
-  (p5: P5) => {
-    p5.setup = makeSetup(p5);
-    p5.draw = makeDraw(p5);
-  }, document.body);
+export const p5js = new P5((p5: P5) => {
+  p5.setup = makeSetup(p5);
+  p5.draw = makeDraw(p5);
+}, document.body);
