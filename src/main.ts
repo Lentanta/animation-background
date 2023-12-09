@@ -17,11 +17,11 @@ const getCurrentURLInformation = () => {
 const { width, height } = getCurrentURLInformation()
 
 
-const NUMBER_OF_SQUARE_HORIZONTAL = 18;
-const NUMBER_OF_SQUARE_VERTICAL = 6;
+const NUMBER_OF_SQUARE_HORIZONTAL = 32;
+const NUMBER_OF_SQUARE_VERTICAL = 16;
 const MARGIN_SPACE = 0;
 
-const SIZE = height / NUMBER_OF_SQUARE_VERTICAL;
+const SIZE = width / NUMBER_OF_SQUARE_HORIZONTAL;
 
 const colors: Color[] = [
   new Color("#FFFFFF"),
@@ -51,17 +51,21 @@ const makeSetup = (p5: P5) => () => {
 const makeDraw = (p5: P5) => () => {
   p5.frameRate(60);
   p5.background(backgroundColor.r, backgroundColor.g, backgroundColor.b);
-  const frameCount = p5.frameCount / 80;
+  const frameCount = p5.frameCount / 60;
 
 
-  squares.forEach((square) => {
+  squares.forEach((square, index) => {
+    const size = p5.abs(square.size * p5.sin(frameCount))
+    const offset = (square.size - size) / 2;
+
+    if (size < 3) {
+      squares[index].color = randomValueIn(colors)
+    };
 
     p5.square(
-      square.x,
-      square.y,
-      p5.abs(
-        square.size * p5.sin(frameCount - (square.x / 1000))
-      )
+      square.x + offset,
+      square.y + offset,
+      size
     );
     p5.fill(
       square.color.r,
