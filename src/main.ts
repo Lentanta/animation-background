@@ -18,8 +18,8 @@ const { width, height } = getCurrentURLInformation()
 
 
 const NUMBER_OF_SQUARE_HORIZONTAL = 32;
-const NUMBER_OF_SQUARE_VERTICAL = 16;
-const MARGIN_SPACE = 0;
+const NUMBER_OF_SQUARE_VERTICAL = 32;
+const MARGIN_SPACE = 5;
 
 const SIZE = width / NUMBER_OF_SQUARE_HORIZONTAL;
 
@@ -55,10 +55,10 @@ const makeDraw = (p5: P5) => () => {
 
 
   squares.forEach((square, index) => {
-    const size = p5.abs(square.size * p5.sin(frameCount))
-    const offset = (square.size - size) / 2;
+    const size = square.size * p5.sin(frameCount - square.x / 1000)
+    const offset = (square.size - size + MARGIN_SPACE) / 2;
 
-    if (size < 3) {
+    if (p5.sin(frameCount) < 0.1) {
       squares[index].color = randomValueIn(colors)
     };
 
